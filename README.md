@@ -15,7 +15,7 @@ This repository currently contains an API for Generation I Pokemon written in C#
 
 ## Technologies Used
 - C#
-- ASP.Net Core
+- ASP.Net Core 8.0
 - NuGet
 - SQL Server
 
