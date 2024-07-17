@@ -1,15 +1,22 @@
 ## PokemonReviewAPI
 
 ## Overview
+This repository currently contains an API for Generation I Pokemon written in C# and built using ASP.Net Core 8.0 framework.
 
-## Diagram
+## Photos
+
+## Features
+- API documentation using Swagger
+  - GET and POST requests
+- Authentication and Authorization using JWT and Identity
+- Data transfer object with AutoMapper
+- Seed data for testing
 
 ## Technologies Used
 - C#
 - ASP.Net Core
 - NuGet
 - SQL Server
-
 
 ## Getting Started
 - Clone repo
