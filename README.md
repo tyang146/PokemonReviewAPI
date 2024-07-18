@@ -6,12 +6,11 @@ This repository currently contains an API for Generation I Pokemon written in C#
 ## Photos
 
 ## Features
-- API documentation using Swagger
-  - GET and POST requests
+- API documentation using Swagger and OpenAPI
 - Authentication and Authorization using JWT and Identity
 - Data transfer object with AutoMapper
-- Seed data for testing
-- Models, Controllers, and Migrations
+- Migration and data seeding 
+- Models and Controllers
 
 ## Technologies Used
 - C#
