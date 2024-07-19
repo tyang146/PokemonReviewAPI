@@ -5,7 +5,7 @@ This repository currently contains an API for Generation I Pokemon written in C#
 
 ## Photos
 ![api](https://github.com/tyang146/PokemonReviewAPI/blob/master/Photos/api.jpeg)
-![diagram](https://github.com/tyang146/PokemonReviewAPI/blob/master/Photos/diagram.png)
+![diagram](https://github.com/tyang146/PokemonReviewAPI/blob/master/Photos/diagram2.png)
 
 
 ## Features
