@@ -24,7 +24,7 @@ This repository currently only contains an API for retrieving Generation I Pokem
 ## Getting Started
 - Clone repo
 - Connect your database in appsettings.json file
-- Add-Migration or/and Update-Database in NuGet Console
+- Add-Migration or/and Update-Database
 - To seed data run "dotnet run seeddata" in terminal
-- Finally run solution in Visual Studio
+- Else run solution in Visual Studio
 
