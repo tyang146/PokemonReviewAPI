@@ -23,7 +23,7 @@ This repository currently only contains an API for retrieving Generation I Pokem
 
 ## Getting Started
 - Clone repo
-- Connect database 
+- Connect your database 
 - Add-Migration or/and Update-Database
 - To seed data run "dotnet run seeddata" in terminal
 - Else run solution in Visual Studio
