@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PokemonReview.Automapper.Dto;
-using PokemonReview.Controllers.TokenService;
 using PokemonReview.Models;
+using PokemonReviewAPI.Controllers.TokenService;
 
 namespace api.Controllers
 {
@@ -39,7 +39,7 @@ namespace api.Controllers
             return Ok(_tokenService.CreateToken(user));
         }
 
-        //POST and save register information to database and then return register information and token
+        //POST and save register information to database and then return token
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
@@ -62,12 +62,7 @@ namespace api.Controllers
                     if (roleResult.Succeeded)
                     {
                         return Ok(
-                            new NewUserDto
-                            {
-                                UserName = appUser.UserName,
-                                Email = appUser.Email,
-                                Token = _tokenService.CreateToken(appUser)
-                            }
+                            _tokenService.CreateToken(appUser)
                         );
                     }
                     else

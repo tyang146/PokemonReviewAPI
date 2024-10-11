@@ -17,11 +17,14 @@ namespace PokemonReview
         public DbSet<Category> Categories { get; set; }
         public DbSet<Pokemon> Pokemon { get; set; }
         public DbSet<PokemonCategory> PokemonCategories { get; set; }
+        public DbSet<Reviews> Reviews { get; set; }
+
 
         //OnModelCreating
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);//calls base implementation
+            //calls base implementation
+            base.OnModelCreating(modelBuilder);
 
             //seed identity role data
             List<IdentityRole> roles = new List<IdentityRole>
@@ -51,6 +54,5 @@ namespace PokemonReview
                     .WithMany(pc => pc.PokemonCategories)
                     .HasForeignKey(c => c.CategoryId);
         }
-
     }
 }

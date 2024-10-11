@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PokemonReview.Automapper.Dto;
-using PokemonReview.Controllers.QueryObjects;
-using PokemonReview.Models;
 
 namespace PokemonReview.Controllers
 {
@@ -21,20 +19,19 @@ namespace PokemonReview.Controllers
             _mapper = mapper;
         }
 
-        //get all categories
+        //get all categories or filter by name
         [HttpGet]
         [Authorize]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Category>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<CategoryDto>))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetCategories([FromQuery] CategoryQueryObject query)
+        public async Task<IActionResult> GetCategories(string? CategoryName)
         {
-            var categories = await _context.Categories
-                .Where(c => string.IsNullOrWhiteSpace(query.CategoryName) || c.Name.StartsWith(query.CategoryName))//allow to filter by name
-                .Select(c => _mapper.Map<CategoryDto>(c))
-                .ToListAsync();
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var categories = _mapper.Map<List<CategoryDto>>(await _context.Categories
+                .Where(c => string.IsNullOrWhiteSpace(CategoryName) || c.Name.StartsWith(CategoryName))
+                .ToListAsync());
 
             return Ok(categories);
         }
@@ -42,17 +39,18 @@ namespace PokemonReview.Controllers
         //get a single category by id
         [HttpGet("{categoryId}")]
         [Authorize]
-        [ProducesResponseType(200, Type = typeof(Category))]
+        [ProducesResponseType(200, Type = typeof(CategoryDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetCategory(int categoryId)
+        public async Task<IActionResult> GetCategoryById(int categoryId)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             if (!await _context.Categories.AnyAsync(c => c.Id == categoryId))
                 return NotFound();
 
-            var category = _mapper.Map<CategoryDto>(await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId));
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var category = _mapper.Map<CategoryDto>(await _context.Categories
+                .FirstOrDefaultAsync(c => c.Id == categoryId));
 
             return Ok(category);
         }
@@ -60,15 +58,15 @@ namespace PokemonReview.Controllers
         //get pokemons by category id
         [HttpGet("pokemon/{categoryId}")]
         [Authorize]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Pokemon>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<CategoryDto>))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetPokemonByCategoryId(int categoryId)
         {
-            var pokemons = _mapper.Map<List<PokemonDto>>(
-                await _context.PokemonCategories.Where(p => p.CategoryId == categoryId).Select(p => p.Pokemon).ToListAsync());
-
             if (!ModelState.IsValid)
                 return BadRequest();
+
+            var pokemons = _mapper.Map<List<PokemonDto>>(await _context.PokemonCategories
+                .Where(p => p.CategoryId == categoryId).Select(p => p.Pokemon).ToListAsync());
 
             return Ok(pokemons);
         }

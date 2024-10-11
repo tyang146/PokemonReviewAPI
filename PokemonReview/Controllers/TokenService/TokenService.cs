@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace PokemonReview.Controllers.TokenService
+namespace PokemonReviewAPI.Controllers.TokenService
 {
     public class TokenService
     {

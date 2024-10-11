@@ -9,18 +9,18 @@ using PokemonReview;
 
 #nullable disable
 
-namespace PokemonReview.Migrations
+namespace PokemonReviewAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240715194331_initial")]
-    partial class initial
+    [Migration("20241011100619_i")]
+    partial class i
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -50,6 +50,20 @@ namespace PokemonReview.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "af6a35aa-cc18-4def-a895-67a5f2b0b4b5",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "046d8384-4fff-4ddd-80d6-1e858366f47b",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -272,6 +286,33 @@ namespace PokemonReview.Migrations
                     b.ToTable("PokemonCategories");
                 });
 
+            modelBuilder.Entity("PokemonReview.Models.Reviews", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PokemonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ratings")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("PokemonId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -342,6 +383,28 @@ namespace PokemonReview.Migrations
                     b.Navigation("Pokemon");
                 });
 
+            modelBuilder.Entity("PokemonReview.Models.Reviews", b =>
+                {
+                    b.HasOne("PokemonReview.Models.AppUser", "AppUser")
+                        .WithMany("Reviews")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("PokemonReview.Models.Pokemon", "Pokemon")
+                        .WithMany("Reviews")
+                        .HasForeignKey("PokemonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Pokemon");
+                });
+
+            modelBuilder.Entity("PokemonReview.Models.AppUser", b =>
+                {
+                    b.Navigation("Reviews");
+                });
+
             modelBuilder.Entity("PokemonReview.Models.Category", b =>
                 {
                     b.Navigation("PokemonCategories");
@@ -350,6 +413,8 @@ namespace PokemonReview.Migrations
             modelBuilder.Entity("PokemonReview.Models.Pokemon", b =>
                 {
                     b.Navigation("PokemonCategories");
+
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

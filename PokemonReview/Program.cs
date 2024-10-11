@@ -4,20 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PokemonReview;
-using PokemonReview.Controllers.TokenService;
 using PokemonReview.Models;
+using PokemonReviewAPI.Controllers.TokenService;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();//enable Controllers
+//enable Controllers
+builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();//enable api explorer
-//enable swagger with security
+//enable endpoint api explorer
+builder.Services.AddEndpointsApiExplorer();
+
+//enable swagger with security; in this case JWT
 builder.Services.AddSwaggerGen(option =>
 {
-    option.SwaggerDoc("v1", new OpenApiInfo { Title = "PokemonReview API", Version = "v1" });
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "PokemonReviewAPI", Version = "v1" });
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -43,10 +45,12 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
-//enable sql server
+//enable database; in this case sql server
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddTransient<SeedData>();//enable seeding = prepopulated data
+
+//enable seeding = prepopulated data
+builder.Services.AddTransient<SeedData>();
 
 //enable automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -59,6 +63,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequireUppercase = true;
     options.Password.RequiredLength = 12;
+    options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<DataContext>();
 
 //enable authentication
@@ -87,6 +92,7 @@ builder.Services.AddAuthentication(options =>
 //enable token
 builder.Services.AddScoped<TokenService>();
 
+//build the app
 var app = builder.Build();
 
 //add prepopulated data when "dotnet run seeddata"
@@ -109,13 +115,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
+//run the app
 app.Run();
