@@ -5,7 +5,7 @@ This repository now contains an API for retrieving and rating Generation I Pokem
 
 ## Photos
 ![api](https://github.com/tyang146/PokemonReviewAPI/blob/master/Photos/1.png)
-![diagram](https://github.com/tyang146/PokemonReviewAPI/blob/master/Photos/diagram2.png)
+![diagram](https://github.com/tyang146/PokemonReviewAPI/blob/master/Photos/2.png)
 
 
 ## Features
