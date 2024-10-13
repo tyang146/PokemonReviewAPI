@@ -9,7 +9,7 @@ This repository now contains an API for retrieving and rating Generation I Pokem
 
 
 ## Features
-- Restful API and API documentation using Swagger and OpenAPI
+- Restful API and API documentation using OpenAPI and Swagger
 - Entity Framework Core
 - Authentication and Authorization using JWT and Identity
 - Data transfer object and AutoMapper
