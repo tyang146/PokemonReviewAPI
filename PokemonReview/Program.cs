@@ -49,9 +49,6 @@ builder.Services.AddSwaggerGen(option =>
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//enable seeding = prepopulated data
-builder.Services.AddTransient<SeedData>();
-
 //enable automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -94,20 +91,6 @@ builder.Services.AddScoped<TokenService>();
 
 //build the app
 var app = builder.Build();
-
-//add prepopulated data when "dotnet run seeddata"
-if (args.Length == 1 && args[0].ToLower() == "seeddata")
-    SeedData(app);
-void SeedData(IHost app)
-{
-    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-
-    using (var scope = scopedFactory.CreateScope())
-    {
-        var service = scope.ServiceProvider.GetService<SeedData>();
-        service.SeedDataContext();
-    }
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
