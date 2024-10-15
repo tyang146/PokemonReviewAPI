@@ -14,7 +14,7 @@ This repository now contains an API for retrieving and rating Generation I Pokem
 - Data transfer object and AutoMapper
 - Migration and data seeding using EF-Design and EF-Tools
 - Models and Controllers
-- Entity Framework Core
+- Entity
 
 ## Technologies Used
 - C#
