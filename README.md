@@ -25,6 +25,5 @@ This repository now contains an API for retrieving and rating Generation I Pokem
 - Clone repo
 - Connect your database in appsettings.json file
 - Add-Migration or/and Update-Database using package manager console
-- To seed data run "dotnet run seeddata" in terminal
-- Else run solution in Visual Studio
+- Run solution in Visual Studio
 
