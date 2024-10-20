@@ -1,7 +1,7 @@
 ## PokemonReviewAPI
 
 ## Overview
-This repository now contains an API for retrieving and rating Generation I Pokemons written in C# and using ASP.Net Core 8.
+This repository now contains a RESTful API for retrieving and rating Generation I Pokemons written in C# and using ASP.Net Core 8.
 
 ## Photos
 ![api](https://github.com/tyang146/PokemonReviewAPI/blob/master/Photos/1.png)
@@ -9,7 +9,7 @@ This repository now contains an API for retrieving and rating Generation I Pokem
 
 
 ## Features
-- Restful API and API documentation using OpenAPI and Swagger
+- RESTful API and API documentation using OpenAPI and Swagger
 - Authentication and Authorization using JWT and Identity
 - Data transfer object and AutoMapper
 - Migration and data seeding using EF-Design and EF-Tools
