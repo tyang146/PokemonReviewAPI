@@ -14,7 +14,6 @@ This repository contains a RESTful API for retrieving and rating all Generation 
 - Data transfer object and AutoMapper
 - Migration and data seeding using EF-Design and EF-Tools
 - Models and Controllers
-- Entity
 - LINQ
 
 ## Technologies Used
